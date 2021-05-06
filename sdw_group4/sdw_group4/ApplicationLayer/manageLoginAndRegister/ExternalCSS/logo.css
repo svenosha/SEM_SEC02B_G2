@@ -1,0 +1,12 @@
+.header {
+    text-align: center;
+}
+
+.noBtn {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline:none;
+}
+
