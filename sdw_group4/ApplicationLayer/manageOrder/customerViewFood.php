@@ -84,9 +84,13 @@
                         <td><input type="number" name="itemquantity" value="1" style="width: 3em;"></td>
                         <td style="text-align: center;">
                             <input type="hidden" name="serviceID" value="<?=$row['serviceID']?>">
-                            &nbsp;<button type="submit" value="View">View<a href="./customerViewFoodProduct.php?"></button>
+                            <input type="button" onclick="location.href='customerViewFoodProduct.php?serviceID=<?=$row['serviceID']?>'" value="View Product">
+                        </td>
+                        <td style="text-align: center;"> 
+                        <input type="hidden" name="serviceID" value="<?=$row['serviceID']?>">
                             &nbsp;<button type="submit" name="addtocart" onclick="return confirm('Confirm add to cart?');"><img src="Image/addtocarticon.png" alt="addtocarticon" width="40px" height="40px"></button>
                         </td>
+
                     </form>
                     <?php } ?>
                     </tr>

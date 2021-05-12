@@ -26,6 +26,12 @@ class manageOrderModel{
         return DB::run($sql);
     }
 
+    function viewProductDetail(){
+        $sql = "select * from service where serviceID = :serviceID";
+        $args = [':custID'=>$this->custID,':serviceID' =>$this->serviceID];
+        return DB::run($sql, $args);
+    }
+
     //add item to the cart
     function addToCart(){
         
