@@ -9,10 +9,12 @@ class manageServiceController{
         $item->servicetype = $_POST['servicetype'];
         $item->itemname = $_POST['itemname'];
         $item->itemprice = $_POST['itemprice'];
+	$item->itemdesc = $_POST['itemdesc'];
+	$item->itemstock = $_POST['itemstock'];
         $item->itemimage = $_FILES['itemimage']['name'];
         $target_dir = "upload/";
         $target_file = $target_dir . basename($_FILES["itemimage"]["name"]);
-        // Select file type
+	 // Select file type
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
         // Valid file extensions
         $extensions_arr = array("jpg","jpeg","png","gif");
@@ -57,6 +59,8 @@ class manageServiceController{
         $item->serviceID = $_POST['serviceID'];
         $item->itemname = $_POST['itemname'];
         $item->itemprice = $_POST['itemprice'];
+	$item->itemdesc = $_POST['itemdesc'];
+	$item->itemstock = $_POST['itemstock'];
         $item->servicetype = $_POST['servicetype'];
 
         if($item->updateItem()){
