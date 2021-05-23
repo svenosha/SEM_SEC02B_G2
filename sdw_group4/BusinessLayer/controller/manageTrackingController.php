@@ -24,6 +24,7 @@ class manageTrackingController{
     function acceptSP(){
         $service = new manageTrackingModel();
         $service->spID = $_SESSION['spID'];
+        $service->serviceID = $_POST['serviceID'];
         $service->orderID = $_POST['orderID'];
         if($service->acceptSPNotification()){
             $message = "Success Accept!";
@@ -35,6 +36,7 @@ class manageTrackingController{
     function rejectSP(){
         $service = new manageTrackingModel();
         $service->spID = $_SESSION['spID'];
+        $service->serviceID = $_POST['serviceID'];
         $service->orderID = $_POST['orderID'];
         if($service->rejectSPNotification()){
             $message = "Success Reject!";
