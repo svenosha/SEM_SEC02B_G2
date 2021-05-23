@@ -33,10 +33,10 @@
     </head>
     <body>
         <div class="topnav">
-            <a href="../../ApplicationLayer/manageOrder/customerHomePage.php?spID=<?=$_SESSION['spID']?>"><img src="Image/largerlogo.png" width="110px" height="70px"><label style="font-size: 120%; padding-right: 5px;">Homepage</label></a>
+            <a href="../../ApplicationLayer/manageOrder/customerHomePage.php?spID=<?=$_SESSION['custID']?>"><img src="Image/largerlogo.png" width="110px" height="70px"><label style="font-size: 120%; padding-right: 5px;">Homepage</label></a>
             
             <div class="topnav-right">
-                <a href="../../ApplicationLayer/manageUserProfile/customerProfile.php?spID=<?=$_SESSION['spID']?>"><i class="fa fa-user" aria-hidden="true" style="font-size: 50px; padding-right: 5px; padding-left: 5px; padding-top: 22%; padding-bottom: 22%;"></i></a>
+                <a href="../../ApplicationLayer/manageUserProfile/customerProfile.php?spID=<?=$_SESSION['custID']?>"><i class="fa fa-user" aria-hidden="true" style="font-size: 50px; padding-right: 5px; padding-left: 5px; padding-top: 22%; padding-bottom: 22%;"></i></a>
             </div>
         </div>
 
@@ -52,19 +52,29 @@
                         <td width="150"><center><b>Item Name</b></center></td>
                         <td width="130"><center><b>Unit Price (RM)</b></center></td>
                         <td width="130"><center><b>Quantity</b></center></td>
-                        <td width="200"><center><b>Status</b></center></td>
+                        <td width="300"><center><b>Status</b></center></td>
                         
                     </tr>
                     <?php foreach($data as $row){ ?>
                     <tr>
-                        <td><?=$row['itemname']?></td>
+                        <input type="hidden" name="orderID" value="<?=$row['orderID']?>">
+                        <td><a href="../manageTracking/customerNotificationDetails.php?orderID=<?=$row['orderID']?>"><?=$row['itemname']?></a></td>
                         <td><?=$row['itemprice']?></td>
                         <td><?=$row['itemquantity']?></td>
                         <form action="" method="POST">
-                            <td style="text-align: center;">
+                            <td style="text-align: center;" >
                                 <?php 
-                                    if($row['status'] == 3){
+                                    if($row['status'] == 1){
+                                        echo "Order pending accept by service provider.";
+                                    }
+                                    else if($row['status'] == 2){
+                                        echo "Order has been pickup by runner.";
+                                    }
+                                    else if($row['status'] == 3){
                                         echo "Delivery Successful! Enjoy!";
+                                    }
+                                    else if($row['status'] == 4){
+                                        echo "Order has been rejected by service provider";
                                     }
                                     else if($row['status'] == 7){
                                         echo "Delivery Fail! Will be refund ASAP!";
