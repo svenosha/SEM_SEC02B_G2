@@ -25,13 +25,13 @@ class manageTrackingModel{
     }
     //sql for update the order status for accept the order
     function acceptSPNotification(){
-        $sql = "update order1 inner join service on order1.serviceID = service.serviceID set status=2 where service.orderID = :orderID";
+        $sql = "update order1 set status=2 where orderID = :orderID";
         $args = [':orderID'=>$this->orderID];
         return DB::run($sql, $args);
     }
     //sql for update the order status for reject the order
     function rejectSPNotification(){
-        $sql = "update order1 inner join service on order1.serviceID = service.serviceID set status=7 where service.orderID = :orderID";
+        $sql = "update order1 set status=3 where orderID = :orderID";
         $args = [':orderID'=>$this->orderID];
         return DB::run($sql, $args);
     }
