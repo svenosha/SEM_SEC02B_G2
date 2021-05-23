@@ -65,14 +65,18 @@
                     </tr>
                     <?php 
                         $totalprice=0;
+                        $qty=0;
                         foreach($data as $row){ 
                             $subtotal = $row["itemquantity"]*$row["itemprice"]; 
+                            if($row['serviceID'] == $row['serviceID']){
+                                $qty+=$row['itemquantity'];
+                            }
                     ?>
                     <tr>
                         <td><?=$row['serviceID']?></td>
                         <td><?=$row['itemname']?></td>
                         <td><?=$row['itemprice']?></td>
-                        <td><?=$row['itemquantity']?></td>
+                        <td><?php echo "$qty"; ?></td>
                         <td><?php echo "$subtotal"; ?></td>
                         <?php $totalprice = $totalprice + $subtotal; ?>
                     </tr>
