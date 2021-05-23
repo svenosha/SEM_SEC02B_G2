@@ -12,6 +12,7 @@ class manageTrackingController{
     function viewRunner(){
         $service = new manageTrackingModel();
         $service->runnerID = $_SESSION['runnerID'];
+        $service->orderID = $_POST['orderID'];
         return $service->viewRunnerNotification();
     }
     //to retrieve the customer order
@@ -19,6 +20,14 @@ class manageTrackingController{
         $service = new manageTrackingModel();
         $service->custID = $_SESSION['custID'];
         return $service->viewCustomerNotification();
+    }
+    //to display the customer order details
+    function viewCustomerOrderDetails($orderID){
+        $service = new manageTrackingModel();
+        $service->custID = $_SESSION['custID'];
+        $service->orderID = $orderID;
+        return $service->viewCustomerNotificationDetails();
+        
     }
     //to display the accept message
     function acceptSP(){
