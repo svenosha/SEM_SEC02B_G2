@@ -12,7 +12,7 @@
     }
 
     mysqli_select_db($link, "sdw") or die(mysqli_error());
-    $sql = "SELECT *, SUM(order1.itemquantity) AS total FROM `order1` inner join service on order1.serviceID = service.serviceID where status = 3 and spID = '$spID' GROUP BY order1.itemname";
+    $sql = "SELECT *, SUM(order1.itemquantity) AS total FROM `order1` inner join service on order1.serviceID = service.serviceID where status = 3 and spID = '$spID' GROUP BY order1.itemname ORDER BY order1.serviceID ASC";
     $count = mysqli_query($link,$sql);
 
 ?>
