@@ -23,10 +23,10 @@ class manageOrderController{
         return $service->viewAllMedical();
     }
 
-    function viewProductDetail(){
+    function viewProductDetail($serviceID){
         $service = new manageOrderModel();
         $service->custID = $_SESSION['custID'];
-        $service->serviceID = $_POST['serviceID'];
+        $service->serviceID = $serviceID;
         return $service->viewProductDetail();
     }
 

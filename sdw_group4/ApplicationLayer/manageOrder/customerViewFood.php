@@ -2,17 +2,13 @@
     require_once '../../BusinessLayer/controller/manageOrderController.php';
 
     session_start();
+
     
     $service = new manageOrderController();
     $data = $service->viewFood();
 
     if(isset($_POST['addtocart'])){
-        if(array_key_exists($_POST['addtocart'], $_SESSION['itemname'])){
-            $_SESSION['itemname'][$_POST["addtocart"]]+= 1;
-        }
-        else{
         $service->addCart();
-    }
     }
 
 ?>
@@ -73,22 +69,20 @@
                         <td width="150"><center><b>Item Name</b></center></td>
                         <td width="130"><center><b>Unit Price (RM)</b></center></td>
                         <td width="100"><center><b>Quantity</b></center></td>
-                        <td width="100"><center><b>Action</b></center></td>
+                        <td colspan="2" width="100"><center><b>Action</b></center></td>
                     </tr>
                     <?php foreach($data as $row){ ?>
                     <form action="" method="POST">
                     <tr>
                         <td><img src="<?=$row['itemimage']?>" width="150px" height="150px" style="margin-top: 4px; margin-left: 4px; margin-bottom: 4px; margin-right: 4px;"></td>
-                        <td><input type="text" name="itemname" value="<?=$row['itemname']?>" class="noborder"></td>
-                        <td><input type="text" name="itemprice" value="<?=$row['itemprice']?>" class="noborder"></td>
+                        <td><input type="text" name="itemname" value="<?=$row['itemname']?>" class="noborder" readonly></td>
+                        <td><input type="text" name="itemprice" value="<?=$row['itemprice']?>" class="noborder" readonly></td>
                         <td><input type="number" name="itemquantity" value="1" style="width: 3em;"></td>
                         <td style="text-align: center;">
                             <input type="hidden" name="serviceID" value="<?=$row['serviceID']?>">
                             <input type="button" onclick="location.href='customerViewFoodProduct.php?serviceID=<?=$row['serviceID']?>'" value="View Product">
-                        </td>
-                        <td style="text-align: center;"> 
-                        <input type="hidden" name="serviceID" value="<?=$row['serviceID']?>">
-                            &nbsp;<button type="submit" name="addtocart" onclick="return confirm('Confirm add to cart?');"><img src="Image/addtocarticon.png" alt="addtocarticon" width="40px" height="40px"></button>
+                            <input type="hidden" name="serviceID" value="<?=$row['serviceID']?>">
+                            <button type="submit" name="addtocart" onclick="return confirm('Confirm add to cart?');"><img src="Image/addtocarticon.png" alt="addtocarticon" width="40px" height="40px"></button>
                         </td>
 
                     </form>

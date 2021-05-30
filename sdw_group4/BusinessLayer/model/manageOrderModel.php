@@ -28,7 +28,7 @@ class manageOrderModel{
 
     function viewProductDetail(){
         $sql = "select * from service where serviceID = :serviceID";
-        $args = [':custID'=>$this->custID,':serviceID' =>$this->serviceID];
+        $args = [':serviceID' =>$this->serviceID];
         return DB::run($sql, $args);
     }
 
