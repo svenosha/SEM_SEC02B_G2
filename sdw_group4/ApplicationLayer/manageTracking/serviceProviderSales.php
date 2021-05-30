@@ -6,6 +6,14 @@
     $spID = $_SESSION['spID'];
     $notification = new manageTrackingController();
     $data = $notification->viewSPP($spID);
+    $link = mysqli_connect("localhost", "root", "");
+    if (!$link) {
+        die("ERROR: Could not connect. " . mysqli_connect_error());
+    }
+
+    mysqli_select_db($link, "sdw") or die(mysqli_error());
+    $sql = "SELECT *, SUM(order1.itemquantity) AS total FROM `order1` inner join service on order1.serviceID = service.serviceID where status = 3 and spID = '$spID' GROUP BY order1.itemname ORDER BY order1.serviceID ASC";
+    $count = mysqli_query($link,$sql);
 
 ?>
 <!DOCTYPE html>
@@ -63,20 +71,26 @@
                         <td width="230"><center><b>Quantity</b></center></td>
                         <td width="100"><center><b>Subtotal (RM)</b></center></td> 
                     </tr>
-                    <?php 
-                        $totalprice=0;
-                        foreach($data as $row){ 
-                            $subtotal = $row["itemquantity"]*$row["itemprice"]; 
+                    
+                    <?php
+                        $totalprice = 0;            
+                        while($row = mysqli_fetch_array($count)){
+
                     ?>
-                    <tr>
+                        <tr>
                         <td><?=$row['serviceID']?></td>
                         <td><?=$row['itemname']?></td>
                         <td><?=$row['itemprice']?></td>
-                        <td><?=$row['itemquantity']?></td>
-                        <td><?php echo "$subtotal"; ?></td>
-                        <?php $totalprice = $totalprice + $subtotal; ?>
-                    </tr>
-                    <?php } ?>
+                        <td><?=$row['total'] ?></td>
+                    <?php
+                        
+                        $subtotal =  $row['total'] * $row['itemprice'];
+                        echo "<td>$subtotal</td>";
+                        echo "</tr>";
+                        $totalprice = $totalprice + $subtotal;
+                        }
+                    ?>
+                    
                     <tr>
                         <td>&nbsp;</td>
                         <td>&nbsp;</td>

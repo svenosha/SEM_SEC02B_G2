@@ -12,6 +12,7 @@ class manageTrackingController{
     function viewRunner(){
         $service = new manageTrackingModel();
         $service->runnerID = $_SESSION['runnerID'];
+        $service->orderID = $_POST['orderID'];
         return $service->viewRunnerNotification();
     }
     //to retrieve the customer order
@@ -20,10 +21,20 @@ class manageTrackingController{
         $service->custID = $_SESSION['custID'];
         return $service->viewCustomerNotification();
     }
+    //to display the customer order details
+    function viewCustomerOrderDetails($orderID){
+        $service = new manageTrackingModel();
+        $service->custID = $_SESSION['custID'];
+        $service->orderID = $orderID;
+        return $service->viewCustomerNotificationDetails();
+        
+    }
     //to display the accept message
     function acceptSP(){
         $service = new manageTrackingModel();
         $service->spID = $_SESSION['spID'];
+        $service->serviceID = $_POST['serviceID'];
+        $service->orderID = $_POST['orderID'];
         if($service->acceptSPNotification()){
             $message = "Success Accept!";
             echo "<script type='text/javascript'>alert('$message');
@@ -34,6 +45,8 @@ class manageTrackingController{
     function rejectSP(){
         $service = new manageTrackingModel();
         $service->spID = $_SESSION['spID'];
+        $service->serviceID = $_POST['serviceID'];
+        $service->orderID = $_POST['orderID'];
         if($service->rejectSPNotification()){
             $message = "Success Reject!";
             echo "<script type='text/javascript'>alert('$message');
@@ -44,7 +57,7 @@ class manageTrackingController{
     function acceptRunner(){
         $service = new manageTrackingModel();
         $service->runnerID = $_SESSION['runnerID'];
-        $service->serviceID = $_POST['serviceID'];
+        $service->orderID = $_POST['orderID'];
         if($service->acceptRunnerNotification()){
             $message = "Success Delivered to Customer!";
             echo "<script type='text/javascript'>alert('$message');
@@ -55,6 +68,7 @@ class manageTrackingController{
     function rejectRunner(){
         $service = new manageTrackingModel();
         $service->runnerID = $_SESSION['runnerID'];
+        $service->orderID = $_POST['orderID'];
         if($service->rejectRunnerNotification()){
             $message = "Unsuccessful Delivered to Customer!";
             echo "<script type='text/javascript'>alert('$message');

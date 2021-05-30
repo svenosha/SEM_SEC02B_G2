@@ -3,14 +3,15 @@
 
     session_start();
 
+    $orderID = $_GET['orderID'];
     $notification = new manageTrackingController();
-    $data = $notification->viewCustomer();
+    $data = $notification->viewCustomerOrderDetails($orderID);
 
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Customer Notification</title>
+        <title>Customer Delivery Details</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="ExternalCSS/topnav.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -42,7 +43,7 @@
 
         <div class="logout"><a href="../manageLoginAndRegister/userLogin.php">Logout</a></div>
         <center>
-        <h3 style="margin-left: 1em; margin-top: 1em; text-decoration: underline;">Order Notification</h3>
+        <h3 style="margin-left: 1em; margin-top: 1em; text-decoration: underline;">Delivery Details</h3>
         <br><br>
 
             <div style="margin-left: 1.5em;">
@@ -50,41 +51,46 @@
                 <table>
                     <tr>
                         <td width="150"><center><b>Item Name</b></center></td>
-                        <td width="130"><center><b>Unit Price (RM)</b></center></td>
-                        <td width="130"><center><b>Quantity</b></center></td>
-                        <td width="300"><center><b>Status</b></center></td>
+                        <?php foreach($data as $row){ ?>
+                        <td><?=$row['itemname']?></td>
                         
                     </tr>
-                    <?php foreach($data as $row){ ?>
                     <tr>
-                        <input type="hidden" name="orderID" value="<?=$row['orderID']?>">
-                        <td><a href="../manageTracking/customerNotificationDetails.php?orderID=<?=$row['orderID']?>"><?=$row['itemname']?></a></td>
-                        <td><?=$row['itemprice']?></td>
-                        <td><?=$row['itemquantity']?></td>
-                        <form action="" method="POST">
+                        <td width="150"><center><b>Delivery Status</b></center></td>
+                        
                             <td style="text-align: center;" >
                                 <?php 
-                                    if($row['status'] == 1){
-                                        echo "Order pending accept by service provider.";
-                                    }
-                                    else if($row['status'] == 2){
-                                        echo "Order has been pickup by runner.";
+                                    if($row['status'] == 2){
+                                        echo "Order has been accepted by service provider";
+                                        echo "<br />";
+                                        echo "Order has been pickup by runner";
                                     }
                                     else if($row['status'] == 3){
+                                        echo "Order has been accepted by service provider";
+                                        echo "<br />";
+                                        echo "Order has been pickup by runner";
+                                        echo "<br />";
                                         echo "Delivery Successful! Enjoy!";
                                     }
                                     else if($row['status'] == 4){
                                         echo "Order has been rejected by service provider";
+                                        echo "<br />";
+                                        echo "Will be refund ASAP!";
                                     }
                                     else if($row['status'] == 7){
+                                        echo "Order has been accepted by service provider";
+                                        echo "<br />";
+                                        echo "Order has been pickuped by runner";
+                                        echo "<br />";
                                         echo "Delivery Fail! Will be refund ASAP!";
+                                    }
+                                    else if($row['status'] == 1){
+                                        echo "Order pending accept by service provider.";
                                     }
                                 ?>
                             </td>
-
                         </form>
-                        
-                    <?php } ?>
+                        <?php } ?>
                     </tr>
                 </table>
             </div>

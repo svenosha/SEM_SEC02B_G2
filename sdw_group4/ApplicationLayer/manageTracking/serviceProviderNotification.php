@@ -66,6 +66,7 @@
                         <td><?=$row['itemquantity']?></td>
                         <form action="" method="POST">
                             <td style="text-align: center;">
+                                <input type="hidden" name="orderID" value="<?=$row['orderID']?>">
                                 <input type="hidden" name="serviceID" value="<?=$row['serviceID']?>">
                                 &nbsp;<button type="submit" name="accept" onclick="return confirm('Are you sure to accept?');"><i class="fa fa-check" aria-hidden="true"></i></button>&nbsp;
                                 &nbsp;<button type="submit" name="reject" onclick="return confirm('Are you sure to delete?');"><i class="fa fa-times" aria-hidden="true"></i></button>&nbsp;

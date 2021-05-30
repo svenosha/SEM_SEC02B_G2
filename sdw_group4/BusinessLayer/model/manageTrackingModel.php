@@ -13,8 +13,14 @@ class manageTrackingModel{
     }
     //sql for sql for retrieve data for customer order notification
     function viewCustomerNotification(){
-        $sql = "select * from order1 inner join service on order1.serviceID = service.serviceID where order1.status=3 and order1.custID=:custID";
+        $sql = "select * from order1 inner join service on order1.serviceID = service.serviceID where order1.custID=:custID";
         $args = [':custID'=>$this->custID];
+        return DB::run($sql, $args);
+    }
+    //sql for sql for retrieve data for customer order details
+    function viewCustomerNotificationDetails(){
+        $sql = "select * from order1 inner join service on order1.serviceID = service.serviceID where order1.custID=:custID and order1.orderID=:orderID";
+        $args = [':custID'=>$this->custID,':orderID'=>$this->orderID];
         return DB::run($sql, $args);
     }
     //sql for sql for retrieve data for runner pending deliver order notification
@@ -25,26 +31,26 @@ class manageTrackingModel{
     }
     //sql for update the order status for accept the order
     function acceptSPNotification(){
-        $sql = "update order1 inner join service on order1.serviceID = service.serviceID set status=2 where service.spID = :spID";
-        $args = [':spID'=>$this->spID];
+        $sql = "update order1 set status=2 where orderID = :orderID";
+        $args = [':orderID'=>$this->orderID];
         return DB::run($sql, $args);
     }
     //sql for update the order status for reject the order
     function rejectSPNotification(){
-        $sql = "update order1 inner join service on order1.serviceID = service.serviceID set status=7 where service.spID = :spID";
-        $args = [':spID'=>$this->spID];
+        $sql = "update order1 set status=4 where orderID = :orderID";
+        $args = [':orderID'=>$this->orderID];
         return DB::run($sql, $args);
     }
     //sql for update the delivery status for success to delivery
     function acceptRunnerNotification(){
-        $sql = "update tracking inner join order1 on tracking.orderID = order1.orderID set status=3 where order1.serviceID = :serviceID and tracking.runnerID = :runnerID";
-        $args = [':serviceID'=>$this->serviceID, ':runnerID'=>$this->runnerID];
+        $sql = "update tracking inner join order1 on tracking.orderID = order1.orderID set status=3 where order1.orderID = :orderID and tracking.runnerID = :runnerID";
+        $args = [':orderID'=>$this->orderID, ':runnerID'=>$this->runnerID];
         return DB::run($sql, $args);
     }
     //sql for update the delivery status for fail to delivery
     function rejectRunnerNotification(){
-        $sql = "update order1 set status=7 where serviceID = :serviceID";
-        $args = [':serviceID'=>$this->serviceID];
+        $sql = "update tracking inner join order1 on tracking.orderID = order1.orderID set status=7 where order1.orderID = :orderID and tracking.runnerID = :runnerID";
+        $args = [':orderID'=>$this->orderID, ':runnerID'=>$this->runnerID];
         return DB::run($sql, $args);
     }
     //sql for retrieve the data for commission report
