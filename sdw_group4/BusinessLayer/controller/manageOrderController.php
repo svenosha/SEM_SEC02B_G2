@@ -23,6 +23,13 @@ class manageOrderController{
         return $service->viewAllMedical();
     }
 
+    function viewProductDetail($serviceID){
+        $service = new manageOrderModel();
+        $service->custID = $_SESSION['custID'];
+        $service->serviceID = $serviceID;
+        return $service->viewProductDetail();
+    }
+
     //add item to the cart
     function addCart(){
         $service = new manageOrderModel();

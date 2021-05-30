@@ -3,10 +3,12 @@
 
     session_start();
 
+    $serviceID = $_GET['serviceID'];
     
     $service = new manageOrderController();
-    $data = $service->viewFood();
+    $data = $service->viewProductDetail($serviceID);
 
+    
     if(isset($_POST['addtocart'])){
         $service->addCart();
     }
@@ -15,7 +17,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Customer View Food</title>
+        <title>View Product Detail</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="ExternalCSS/topnav.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -24,7 +26,7 @@
         <script src="https://use.fontawesome.com/3cc6771f24.js"></script>
         <style>
             td {
-                text-align: center;
+                text-align: left;
             }
 
             .logout {
@@ -42,9 +44,6 @@
                 border-radius: 50%;
             }
 
-            input {
-                text-align: center;
-            }
         </style>
     </head>
     <body>
@@ -58,33 +57,38 @@
 
         <div class="logout"><a href="../manageLoginAndRegister/userLogin.php">Logout</a></div>
         <center>
-        <h3 style="margin-left: 1em; margin-top: 1em; text-decoration: underline;">Customer View Food Service</h3>
+        <h3 style="margin-left: 1em; margin-top: 1em; text-decoration: underline;">View Product Detail</h3>
         <br><br>
 
             <div style="margin-left: 1.5em;">
 
-                <table border="1">
-                    <tr>
-                        <td><center><b>Item Image</b></center></td>
-                        <td width="150"><center><b>Item Name</b></center></td>
-                        <td width="130"><center><b>Unit Price (RM)</b></center></td>
-                        <td width="100"><center><b>Quantity</b></center></td>
-                        <td colspan="2" width="100"><center><b>Action</b></center></td>
-                    </tr>
+                <table border="0">
                     <?php foreach($data as $row){ ?>
                     <form action="" method="POST">
                     <tr>
-                        <td><img src="<?=$row['itemimage']?>" width="150px" height="150px" style="margin-top: 4px; margin-left: 4px; margin-bottom: 4px; margin-right: 4px;"></td>
-                        <td><input type="text" name="itemname" value="<?=$row['itemname']?>" class="noborder" readonly></td>
+                        <td></td>
+                        <td style="text-align: center;"><img src="<?=$row['itemimage']?>" width="300px" height="300px" style="margin-top: 4px; margin-left: 4px; margin-bottom: 4px; margin-right: 4px;"></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td style="text-align: center;"><h2><input type="text" name="itemname" value="<?=$row['itemname']?>" class="noborder" style="text-align: center;" readonly></h2></td>
+                    </tr>
+                    <tr>
+                        <td><b>Unit Price(RM):</b></td>
                         <td><input type="text" name="itemprice" value="<?=$row['itemprice']?>" class="noborder" readonly></td>
+                        
+                    <tr>
+                        <td><b>Quantity:</b></td>
                         <td><input type="number" name="itemquantity" value="1" style="width: 3em;"></td>
-                        <td style="text-align: center;">
+                        <td style="text-align: left;">
                             <input type="hidden" name="serviceID" value="<?=$row['serviceID']?>">
-                            <input type="button" onclick="location.href='customerViewFoodProduct.php?serviceID=<?=$row['serviceID']?>'" value="View Product">
-                            <input type="hidden" name="serviceID" value="<?=$row['serviceID']?>">
-                            <button type="submit" name="addtocart" onclick="return confirm('Confirm add to cart?');"><img src="Image/addtocarticon.png" alt="addtocarticon" width="40px" height="40px"></button>
+                            &nbsp;<button type="submit" name="addtocart" onclick="return confirm('Confirm add to cart?');"><img src="Image/addtocarticon.png" alt="addtocarticon" width="40px" height="40px"></button>
                         </td>
-
+                    </tr>
+                        <tr>
+                        <td><b>Description:</b></td>
+                        <td><input type="text" name="itemdesc" value="<?=$row['itemdesc']?>" class="noborder" readonly></td>
+                        </tr>
                     </form>
                     <?php } ?>
                     </tr>
