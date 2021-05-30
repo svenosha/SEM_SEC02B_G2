@@ -71,6 +71,8 @@
                         <td><center><b>Item Image</b></center></td>
                         <td width="150"><center><b>Item Name</b></center></td>
                         <td width="130"><center><b>Unit Price (RM)</b></center></td>
+                        <td width="130"><center><b>Item Description</b></center></td>
+                        <td width="130"><center><b>Item in Stock</b></center></td>
                         <td width="130"><center><b>Service Type</b></center></td>
                         <td width="100"><center><b>Action</b></center></td>
                     </tr>
@@ -79,6 +81,8 @@
                         <td><img src="<?=$row['itemimage']?>" width="150px" height="150px" style="margin-top: 4px; margin-left: 4px; margin-bottom: 4px; margin-right: 4px;"></td>
                         <td><?=$row['itemname']?></td>
                         <td><?=$row['itemprice']?></td>
+                        <td><?=$row['itemdesc']?></td>
+                        <td><?=$row['itemstock']?></td>
                         <td><?=$row['servicetype']?></td>
                         <form action="" method="POST">
                             <td style="text-align: center;">
