@@ -76,6 +76,14 @@
                     <td><input type="text" name="itemprice" value="<?=$row['itemprice']?>" required></td>
                 </tr>
                 <tr>
+                    <td>Item Description:&emsp;</td>
+                    <td><input type="text" name="itemdesc" value="<?=$row['itemdesc']?>" required></td>
+                </tr>
+                <tr>
+                    <td>Item in Stock:&emsp;</td>
+                    <td><input type='text' name="itemdesc" value="<?=$row['itemstock']?>" required></td>
+                </tr>
+                <tr>
                     <td>Item Image:&emsp;&emsp;</td>
                     <td><img src="<?=$row['itemimage']?>" width="95px" height="95px" border="1px solid black" style="margin-top: 2px;"></td>
                 </tr>
