@@ -104,6 +104,8 @@ CREATE TABLE `service` (
   `servicetype` varchar(50) NOT NULL,
   `itemname` varchar(50) NOT NULL,
   `itemprice` int(11) NOT NULL,
+  `itemdesc` varchar(255) NOT NULL,
+  `itemstock` int(11) NOT NULL,
   `itemimage` longblob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
