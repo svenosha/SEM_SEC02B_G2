@@ -38,7 +38,15 @@ class manageOrderController{
         $service->itemname = $_POST['itemname'];
         $service->itemprice = $_POST['itemprice'];
         $service->itemquantity = $_POST['itemquantity'];
-        return $service->addToCart();
+        
+        $duplicate = $service->DuplicateService();
+        if ($duplicate == 1) {
+            
+            $service->updateCartQuantity();
+        $message = "Success Added into Cart";
+        echo "<script type='text/javascript'>alert('$message');</script>";
+        } else 
+        $service->addToCart();
     }
 
     //to view the cart

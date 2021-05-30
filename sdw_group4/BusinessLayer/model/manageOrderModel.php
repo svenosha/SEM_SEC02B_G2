@@ -42,10 +42,28 @@ class manageOrderModel{
 
     //view cart
     function viewAllOrder(){
-        $sql = "select * from (order1 inner join service on order1.serviceID = service.serviceID) where custID = :custID and order1.status=0";
+        $sql = "select * from (order1 inner join service on order1.serviceID = service.serviceID) where order1.custID = :custID and order1.status=0";
         $args = [':custID'=>$this->custID];
         return DB::run($sql, $args);
     }
+
+    //update quantity after adding same item to cart
+    function updateCartQuantity()
+    {
+        $sql = "update order1 set itemquantity = itemquantity +:itemquantity where serviceID=:serviceID and custID=:custID";
+        $args = [':serviceID' => $this->serviceID, ':itemquantity' => $this->itemquantity, ':custID' => $this->custID];
+        return DB::run($sql, $args);
+    }
+
+    function DuplicateService()
+    {
+        $sql = "select * from order1 where status=0 and serviceID=:serviceID and custID=:custID";
+        $args = [':serviceID' => $this->serviceID, ':custID' => $this->custID];
+        $stmt = DB::run($sql, $args);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+    
 
     function deleteOrder(){
         $sql = "delete from order1 where serviceID = :serviceID and custID = :custID";
