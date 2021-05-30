@@ -7,12 +7,7 @@
     $data = $service->viewFood();
 
     if(isset($_POST['addtocart'])){
-        if(array_key_exists($_POST['addtocart'], $_SESSION['itemname'])){
-            $_SESSION['itemname'][$_POST["addtocart"]]+= 1;
-        }
-        else{
         $service->addCart();
-    }
     }
 
 ?>
