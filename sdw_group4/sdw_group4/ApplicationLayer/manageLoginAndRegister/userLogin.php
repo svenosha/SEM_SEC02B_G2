@@ -55,7 +55,10 @@
 
         <br><br>
         <div style="text-align: center; font-size: medium;">
-            Don't have an account? <a class="register" href="./userRegister.php"><u>Register here</u></a>.
+            Don't have an account???? <a class="register" href="./userRegister.php"><u>Register here</u></a>.
+        </div>
+        <div style="text-align: center; font-size: medium;">
+             <a class="register" href="./userRegister.php"><u>forgot password?</u></a>.
         </div>
     </body>
 </html>

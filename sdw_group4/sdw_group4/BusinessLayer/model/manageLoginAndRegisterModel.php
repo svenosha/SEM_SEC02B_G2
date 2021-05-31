@@ -16,8 +16,8 @@ class manageLoginAndRegisterModel{
     }
 
     function customerLogin(){
-    	$sql = "select * from customer where custusername=:custusername and custpassword=:custpassword";
-    	$args = [':custusername'=>$this->custusername, ':custpassword'=>$this->custpassword];
+    	$sql = "select * from customer where custemail=:custemail and custpassword=:custpassword";
+    	$args = [':custemail'=>$this->custemail, ':custpassword'=>$this->custpassword];
         $stmt = DB::run($sql, $args);
         return $stmt;
     }
@@ -31,8 +31,8 @@ class manageLoginAndRegisterModel{
     }
 
     function serviceproviderLogin(){
-    	$sql = "select * from serviceprovider where spusername=:spusername and sppassword=:sppassword";
-    	$args = [':spusername'=>$this->spusername, ':sppassword'=>$this->sppassword];
+    	$sql = "select * from serviceprovider where spemail=:spemail and sppassword=:sppassword";
+    	$args = [':spemail'=>$this->spemail, ':sppassword'=>$this->sppassword];
         $stmt = DB::run($sql, $args);
         return $stmt;
     }
@@ -46,10 +46,112 @@ class manageLoginAndRegisterModel{
     }
 
     function runnerLogin(){
-    	$sql = "select * from runner where runnerusername=:runnerusername and runnerpassword=:runnerpassword";
-    	$args = [':runnerusername'=>$this->runnerusername, ':runnerpassword'=>$this->runnerpassword];
+    	$sql = "select * from runner where runneremail=:runneremail and runnerpassword=:runnerpassword";
+    	$args = [':runneremail'=>$this->runneremail, ':runnerpassword'=>$this->runnerpassword];
         $stmt = DB::run($sql, $args);
         return $stmt;
+    }
+
+    function custcheck(){
+        $sql = "select * from customer where custemail=:custemail";
+        $args = [':custemail'=>$this->custemail];
+        $stmt = DB::run($sql, $args);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+    function custgetId(){
+        $sql = "select custID from customer where custemail=:custemail";
+        $args = [':custemail'=>$this->custemail];
+        $stmt = DB::run($sql, $args);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $getId = $row['custID'];
+        return $getId;
+    }
+
+    function custcheckId(){
+        $sql = "select * from customer where custID=:custID";
+        $args = [':custID'=>$this->custID];
+        $stmt = DB::run($sql, $args);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+    function custset_newPw(){
+        $sql = "update customer set custpassword=:password where custID=:custID";
+        $args = [':password'=>$this->set_pw,':custID'=>$this->custID];
+        $stmt = DB::run($sql, $args);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+    function runcheck(){
+        $sql = "select * from runner where runneremail=:runneremail";
+        $args = [':runneremail'=>$this->runneremail];
+        $stmt = DB::run($sql, $args);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+    function rungetId(){
+        $sql = "select runnerID from runner where runneremail=:runneremail";
+        $args = [':runneremail'=>$this->runneremail];
+        $stmt = DB::run($sql, $args);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $getId = $row['runnerID'];
+        return $getId;
+    }
+
+    function runcheckId(){
+        $sql = "select * from runner where runnerID=:runnerID";
+        $args = [':runnerID'=>$this->runnerID];
+        $stmt = DB::run($sql, $args);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+    function runset_newPw(){
+        $sql = "update runner set runnerpassword=:password where runnerID=:runnerID";
+        $args = [':password'=>$this->set_pw,':runnerID'=>$this->runnerID];
+        $stmt = DB::run($sql, $args);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+     function spcheck(){
+        $sql = "select * from serviceprovider where spemail=:spemail";
+        $args = [':spemail'=>$this->spemail];
+        $stmt = DB::run($sql, $args);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+    function spgetId(){
+        $sql = "select spID from serviceprovider where spemail=:spemail";
+        $args = [':spemail'=>$this->spemail];
+        $stmt = DB::run($sql, $args);
+        $stmt->execute();
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $getId = $row['spID'];
+        return $getId;
+    }
+
+    function spcheckId(){
+        $sql = "select * from serviceprovider where spID=:spID";
+        $args = [':spID'=>$this->spID];
+        $stmt = DB::run($sql, $args);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+    function spset_newPw(){
+        $sql = "update serviceprovider set sppassword=:password where spID=:spID";
+        $args = [':password'=>$this->set_pw,':spID'=>$this->spID];
+        $stmt = DB::run($sql, $args);
+        $count = $stmt->rowCount();
+        return $count;
     }
 }
 ?>

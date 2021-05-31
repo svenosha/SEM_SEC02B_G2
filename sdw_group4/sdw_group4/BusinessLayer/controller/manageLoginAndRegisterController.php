@@ -1,6 +1,8 @@
 <?php
 require_once '../../BusinessLayer/model/manageLoginAndRegisterModel.php';
 
+use PHPMailer\PHPMailer\PHPMailer;
+
 class manageLoginAndRegisterController{
     
     function custRegister(){
@@ -22,7 +24,7 @@ class manageLoginAndRegisterController{
 
     function custLogin(){
         $user = new manageLoginAndRegisterModel();
-        $user->custusername = $_POST['custusername'];
+        $user->custemail = $_POST['custemail'];
         $user->custpassword = $_POST['custpassword'];
         $stmt = $user->customerLogin();
         if ($stmt->rowCount()==1){
@@ -30,7 +32,7 @@ class manageLoginAndRegisterController{
             foreach ($stmt as $selected) {
                 $_SESSION['custID'] = $selected['custID'];
             }
-            $_SESSION["custusername"] = $_POST['custusername'];
+            $_SESSION["custemail"] = $_POST['custemail'];
             echo "<script>alert('Login Succesful! Welcome to Beep Beep Delivery System');
             window.location = '../manageOrder/customerHomePage.php?custID=".$_SESSION['custID']."';</script>"; 
         }
@@ -63,7 +65,7 @@ class manageLoginAndRegisterController{
 
     function spLogin(){
         $user = new manageLoginAndRegisterModel();
-        $user->spusername = $_POST['spusername'];
+        $user->spemail = $_POST['spemail'];
         $user->sppassword = $_POST['sppassword'];
         $stmt = $user->serviceproviderLogin();
         if ($stmt->rowCount()==1){
@@ -71,7 +73,7 @@ class manageLoginAndRegisterController{
             foreach ($stmt as $selected) {
                 $_SESSION['spID'] = $selected['spID'];
             }
-            $_SESSION["spusername"] = $_POST['spusername'];
+            $_SESSION["spemail"] = $_POST['spemail'];
             echo "<script>alert('Login Succesful! Welcome to Beep Beep Delivery System');
             window.location = '../manageService/serviceProviderServiceView.php?spID=".$_SESSION['spID']."';</script>"; 
         }
@@ -102,7 +104,7 @@ class manageLoginAndRegisterController{
 
     function runnerLogin(){
         $user = new manageLoginAndRegisterModel();
-        $user->runnerusername = $_POST['runnerusername'];
+        $user->runneremail = $_POST['runneremail'];
         $user->runnerpassword = $_POST['runnerpassword'];
         $stmt = $user->runnerLogin();
         if ($stmt->rowCount()==1){
@@ -110,7 +112,7 @@ class manageLoginAndRegisterController{
             foreach ($stmt as $selected) {
                 $_SESSION['runnerID'] = $selected['runnerID'];
             }
-            $_SESSION["runnerusername"] = $_POST['runnerusername'];
+            $_SESSION["runneremail"] = $_POST['runneremail'];
             echo "<script>alert('Login Succesful! Welcome to Beep Beep Delivery System');
             window.location = '../manageTracking/runnerHomePage.php?runnerID=".$_SESSION['runnerID']."';</script>";  
         }
@@ -120,7 +122,241 @@ class manageLoginAndRegisterController{
             window.location = 'runnerLogin.php';</script>";
         }
     }
-}
 
+
+    // reset password //
+    function custreset(){
+        $user = new manageLoginAndRegisterModel();
+        $user->custemail = $_POST['custemail'];
+        
+        if($user->custcheck() > 0){
+
+            $user->user_id = $user->custgetId();
+            $getId = $user->user_id;
+
+                require_once "../../PHPMailer/PHPMailer.php";
+                require_once "../../PHPMailer/SMTP.php";
+                require_once "../../PHPMailer/Exception.php";
+
+                $mail = new PHPMailer();
+
+                $mail->isSMTP();
+                $mail->Host =  "smtp.gmail.com";
+                $mail->SMTPAuth = true;
+                $mail->Username = "zeqingkoh@gmail.com";
+                $mail->Password = "ahqing981128";
+                $mail->Port = 465;
+                $mail->SMTPSecure = "ssl";
+
+                $mail->isHTML(true);
+                $mail->addAddress($user->custemail);
+                $mail->setFrom("zeqingkoh@gmail.com", "Mr/Mrs/Ms");
+                $mail->Subject = "Reset Password";                
+                $mail->Body = "Hi, <br><br> 
+                               In order to reset your password, please click on the link below: <br> 
+                               <a href='http://localhost/sdw_group4/sdw_group4/ApplicationLayer/manageLoginAndRegister/custSetPassword.php?custID=$getId'> http://localhost/sdw_group4/sdw_group4/ApplicationLayer/manageLoginAndRegister/SetPassword.php?custID=$getId </a> 
+                               <br> <br>
+                               Kindly Regards,<br> 
+                               AskRunner.";
+
+                if($mail->send()){
+                    $message = "Please check your email inbox.";
+                    echo "<script type='text/javascript'>alert('$message');
+                    window.location = '../../ApplicationLayer/manageLoginAndRegister/userLogin.php';</script>";
+                }
+                else{
+                    $message = "Error!";
+                    echo "<script type='text/javascript'>alert('$message');
+                    window.location = '../../ApplicationLayer/Home/Homepage.php';</script>";
+                }
+        }
+        else{
+            $message = "Email does not exist.";
+            echo "<script type='text/javascript'>alert('$message');
+            window.location = '../../ApplicationLayer/Home/Homepage.php';</script>";
+        }
+    }
+
+    function custsetPw($user_idd){
+        $user = new manageLoginAndRegisterModel();
+        $user->custID = $user_idd;
+       
+
+        if($user->custcheckId() > 0){
+            $set_pw = "abcdefghijklmnopqrstuvwyz0123456789";
+            $set_pw = str_shuffle($set_pw);
+            $set_pw = substr($set_pw, 0, 10);
+            $user->set_pw = substr($set_pw, 0, 10);
+
+
+            if($user->custset_newPw() > 0){
+                $message = 'Your new password is '.$set_pw.'. Please change the password after login.';
+                echo "<script type='text/javascript'>alert('$message');
+                window.location = '../../ApplicationLayer/manageLoginAndRegister/customerLogin.php';</script>";
+            }
+        }
+        else{
+            $message = "Error! Please try again.";
+            echo "<script type='text/javascript'>alert('$message');
+            window.location = '../../ApplicationLayer/manageLoginAndRegister/customerLogin.php.php';</script>";
+        }
+    }
+
+
+    function runreset(){
+        $user = new manageLoginAndRegisterModel();
+        $user->runneremail = $_POST['runneremail'];
+        
+        if($user->runcheck() > 0){
+
+            $user->user_id = $user->rungetId();
+            $getId = $user->user_id;
+
+                require_once "../../PHPMailer/PHPMailer.php";
+                require_once "../../PHPMailer/SMTP.php";
+                require_once "../../PHPMailer/Exception.php";
+
+                $mail = new PHPMailer();
+
+                $mail->isSMTP();
+                $mail->Host =  "smtp.gmail.com";
+                $mail->SMTPAuth = true;
+                $mail->Username = "zeqingkoh@gmail.com";
+                $mail->Password = "ahqing981128";
+                $mail->Port = 465;
+                $mail->SMTPSecure = "ssl";
+
+                $mail->isHTML(true);
+                $mail->addAddress($user->runneremail);
+                $mail->setFrom("zeqingkoh@gmail.com", "Mr/Mrs/Ms");
+                $mail->Subject = "Reset Password";                
+                $mail->Body = "Hi, <br><br> 
+                               In order to reset your password, please click on the link below: <br> 
+                               <a href='http://localhost/sdw_group4/sdw_group4/ApplicationLayer/manageLoginAndRegister/runSetPassword.php?runnerID=$getId'> http://localhost/sdw_group4/sdw_group4/ApplicationLayer/manageLoginAndRegister/runSetPassword.php?runnerID=$getId </a> 
+                               <br> <br>
+                               Kindly Regards,<br> 
+                               AskRunner.";
+
+                if($mail->send()){
+                    $message = "Please check your email inbox.";
+                    echo "<script type='text/javascript'>alert('$message');
+                    window.location = '../../ApplicationLayer/manageLoginAndRegister/userLogin.php';</script>";
+                }
+                else{
+                    $message = "Error!";
+                    echo "<script type='text/javascript'>alert('$message');
+                    window.location = '../../ApplicationLayer/Home/Homepage.php';</script>";
+                }
+        }
+        else{
+            $message = "Email does not exist.";
+            echo "<script type='text/javascript'>alert('$message');
+            window.location = '../../ApplicationLayer/Home/Homepage.php';</script>";
+        }
+    }
+
+    function runsetPw($user_idd){
+        $user = new manageLoginAndRegisterModel();
+        $user->runnerID = $user_idd;
+       
+
+        if($user->runcheckId() > 0){
+            $set_pw = "abcdefghijklmnopqrstuvwyz0123456789";
+            $set_pw = str_shuffle($set_pw);
+            $set_pw = substr($set_pw, 0, 10);
+            $user->set_pw = substr($set_pw, 0, 10);
+
+
+            if($user->runset_newPw() > 0){
+                $message = 'Your new password is '.$set_pw.'. Please change the password after login.';
+                echo "<script type='text/javascript'>alert('$message');
+                window.location = '../../ApplicationLayer/manageLoginAndRegister/runnerLogin.php';</script>";
+            }
+        }
+        else{
+            $message = "Error! Please try again.";
+            echo "<script type='text/javascript'>alert('$message');
+            window.location = '../../ApplicationLayer/manageLoginAndRegister/runnerLogin.php.php';</script>";
+        }
+    }
+
+    function spreset(){
+        $user = new manageLoginAndRegisterModel();
+        $user->spemail = $_POST['spemail'];
+        
+        if($user->spcheck() > 0){
+
+            $user->user_id = $user->spgetId();
+            $getId = $user->user_id;
+
+                require_once "../../PHPMailer/PHPMailer.php";
+                require_once "../../PHPMailer/SMTP.php";
+                require_once "../../PHPMailer/Exception.php";
+
+                $mail = new PHPMailer();
+
+                $mail->isSMTP();
+                $mail->Host =  "smtp.gmail.com";
+                $mail->SMTPAuth = true;
+                $mail->Username = "zeqingkoh@gmail.com";
+                $mail->Password = "ahqing981128";
+                $mail->Port = 465;
+                $mail->SMTPSecure = "ssl";
+
+                $mail->isHTML(true);
+                $mail->addAddress($user->spemail);
+                $mail->setFrom("zeqingkoh@gmail.com", "Mr/Mrs/Ms");
+                $mail->Subject = "Reset Password";                
+                $mail->Body = "Hi, <br><br> 
+                               In order to reset your password, please click on the link below: <br> 
+                               <a href='http://localhost/sdw_group4/sdw_group4/ApplicationLayer/manageLoginAndRegister/spSetPassword.php?spID=$getId'> http://localhost/sdw_group4/sdw_group4/ApplicationLayer/manageLoginAndRegister/spSetPassword.php?spID=$getId </a> 
+                               <br> <br>
+                               Kindly Regards,<br> 
+                               AskRunner.";
+
+                if($mail->send()){
+                    $message = "Please check your email inbox.";
+                    echo "<script type='text/javascript'>alert('$message');
+                    window.location = '../../ApplicationLayer/manageLoginAndRegister/userLogin.php';</script>";
+                }
+                else{
+                    $message = "Error!";
+                    echo "<script type='text/javascript'>alert('$message');
+                    window.location = '../../ApplicationLayer/Home/Homepage.php';</script>";
+                }
+        }
+        else{
+            $message = "Email does not exist.";
+            echo "<script type='text/javascript'>alert('$message');
+            window.location = '../../ApplicationLayer/Home/Homepage.php';</script>";
+        }
+    }
+
+    function spsetPw($user_idd){
+        $user = new manageLoginAndRegisterModel();
+        $user->spID = $user_idd;
+       
+
+        if($user->spcheckId() > 0){
+            $set_pw = "abcdefghijklmnopqrstuvwyz0123456789";
+            $set_pw = str_shuffle($set_pw);
+            $set_pw = substr($set_pw, 0, 10);
+            $user->set_pw = substr($set_pw, 0, 10);
+
+
+            if($user->spset_newPw() > 0){
+                $message = 'Your new password is '.$set_pw.'. Please change the password after login.';
+                echo "<script type='text/javascript'>alert('$message');
+                window.location = '../../ApplicationLayer/manageLoginAndRegister/serviceproviderLogin.php';</script>";
+            }
+        }
+        else{
+            $message = "Error! Please try again.";
+            echo "<script type='text/javascript'>alert('$message');
+            window.location = '../../ApplicationLayer/manageLoginAndRegister/serviceproviderLogin.php.php';</script>";
+        }
+    }
+
+}
 ?>
     
