@@ -12,7 +12,6 @@ class manageTrackingController{
     function viewRunner(){
         $service = new manageTrackingModel();
         $service->runnerID = $_SESSION['runnerID'];
-        $service->orderID = $_POST['orderID'];
         return $service->viewRunnerNotification();
     }
     //to retrieve the customer order
