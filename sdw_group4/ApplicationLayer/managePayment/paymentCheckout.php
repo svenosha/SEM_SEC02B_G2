@@ -127,6 +127,66 @@
         
         <br><br>
         <p>Pay By:</p>
+            <div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()" />
+        <label data-bind="attr: {'for': getCode()}" class="label"><span data-bind="text: getTitle()"></span></label>
+    </div>
+
+    <div class="payment-method-content">
+        <p data-bind="html: getInstructions()"></p>   
+    <fieldset data-bind="attr: {class: 'fieldset payment items ' + getCode(), id: 'payment_form_' + getCode()}"> 
+    <div class="field _required">
+        <label data-bind="attr: {for: getCode() + '_codfield1'}" class="label">
+        </label>
+        <div class="control">
+            <input data-validate="{'required-entry':true}" type="text" name="payment[codfield1]" class="input-text" value=""
+                   data-bind="attr: {
+                                    id: getCode() + '_codfield1',
+                                    title: $t('COD Field'),
+                                    'data-container': getCode() + '-codfield1',
+                                    'data-validate': JSON.stringify({'required':true})},
+                                    valueUpdate: 'keyup' "/>
+        </div>
+
+        <div class="control">
+             <select  data-validate="{'required-entry':true}" 
+                    data-bind="attr: {
+                       id: getCode() + '_codfield2',
+                      },
+                      options: optionsList(),
+                      optionsText: 'name',
+                      optionsValue:'id',
+                     optionsCaption: 'Choose...'">
+             </select>   
+        </div>
+    </div>
+    </fieldset>
+
+        <div class="payment-method-billing-address">
+        </div>      
+        <div class="checkout-agreements-block">
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                        click: placeOrder,
+                        attr: {'title': $t('Place Order')},
+                        enable: (getCode() == isChecked()),
+                        css: {disabled: !isPlaceOrderActionAllowed()}
+                        "
+                        disabled>
+                    <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
         <div id="paypal-button-container"></div>
         </div>
         <script>
