@@ -2,14 +2,14 @@
 require_once '../../BusinessLayer/controller/manageLoginAndRegisterController.php';
 $user = new manageLoginAndRegisterController();
 
-if(isset($_POST['login'])){
-    $user->spLogin();
+if(isset($_POST['reset'])){
+    $user->custreset();
 }
 ?>
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Service Provider Login</title>
+        <title>Customer Forgot password</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="ExternalCSS/logo.css">
@@ -23,7 +23,7 @@ if(isset($_POST['login'])){
                 text-align: center;
             } 
 
-            .loginBtn {
+            .resetBtn {
                 background-color: rgb(140, 140, 175);
                 color: white;
                 padding: 10px 10px;
@@ -35,7 +35,7 @@ if(isset($_POST['login'])){
                 opacity: 0.9;
             }
 
-            .loginBtn:hover {
+            .resetBtn:hover {
                 opacity: 1;
             }
 
@@ -45,11 +45,11 @@ if(isset($_POST['login'])){
                 text-align: right;
             }
 
-            .register {
+            .reset {
                 color: blue;
             }
 
-            .register:hover {
+            .reset:hover {
                 color : rgb(0, 81, 255);
                 text-decoration: none; 
                 cursor: pointer;
@@ -58,19 +58,7 @@ if(isset($_POST['login'])){
         </style>
     </head>
 
-    <script>
-        function showPassword() {
-            var x = document.getElementById("password");
     
-            if(x.type === "password"){
-                x.type = "text";
-            } 
-            else{
-                x.type = "password";
-            }
-        }
-    </script>
-
     <body>
         <div class="header">
             <a href="userLogin.php"><img src="Image/logo.jpg" alt="Logo" height="250px"></a>
@@ -78,7 +66,7 @@ if(isset($_POST['login'])){
         </div>
 
         <br>
-        <p><strong>Login as Service Provider</strong>:</p>
+        <p><strong>Customer Forgot Password</strong>:</p>
         <br>
 
         <form action="" method="POST">
@@ -86,24 +74,19 @@ if(isset($_POST['login'])){
                 <div class="col-lg-4 col-lg-offset-4">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true" style="font-size: larger;"></i></span>
-                       <input type="text" class="form-control form-control input-lg" name="spemail" placeholder="Email" required>
+                        <input type="text" class="form-control form-control input-lg" name="custemail" placeholder="email" required>
                     </div>
                     <br>
-                    <div class="input-group">         
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock" aria-hidden="true" style="font-size: larger;"></i></span>
-                        <input type="password" class="form-control form-control input-lg" name="sppassword" id="password" placeholder="Password" required>
-                    </div>
-                    <div class="showPwd"><input type="checkbox" onclick="showPassword()">&nbsp;Show Password</div>
+                    
+                    
                     <br>
-                    <button type="submit" name="login" class="loginBtn"><label style="font-size: larger;">Log In</label></button>
+                   
+ <button type="submit" name="reset" class="resetBtn"><label style="font-size: larger;">Reset password</label></button>
+                     
                 </div>  
             </div>
         </form>
         <br>
-        <div style="text-align: center; font-size: medium;">
-            Don't have an account? <a class="register" href="./serviceproviderRegister.php"><u>Register here</u></a>.
         
-        <td align="right" colspan="2"> <a href="serviceproviderforgetpassword.php" style="text-decoration: underline;"> Forgot Password </a></td>
-        </div>
     </body>
 </html>

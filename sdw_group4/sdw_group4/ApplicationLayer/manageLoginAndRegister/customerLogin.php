@@ -86,7 +86,7 @@ if(isset($_POST['login'])){
                 <div class="col-lg-4 col-lg-offset-4">
                     <div class="input-group">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user" aria-hidden="true" style="font-size: larger;"></i></span>
-                        <input type="text" class="form-control form-control input-lg" name="custusername" placeholder="Username" required>
+                        <input type="text" class="form-control form-control input-lg" name="custemail" placeholder="Email" required>
                     </div>
                     <br>
                     <div class="input-group">         
@@ -102,6 +102,7 @@ if(isset($_POST['login'])){
         <br>
         <div style="text-align: center; font-size: medium;">
             Don't have an account? <a class="register" href="./customerRegister.php"><u>Register here</u></a>.
+            <td align="right" colspan="2"> <a href="customerforgetpassword.php" style="text-decoration: underline;"> Forgot Password </a></td>
         </div>
     </body>
 </html>
