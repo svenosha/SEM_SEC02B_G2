@@ -82,7 +82,7 @@
                 </tr>
                 <tr>
                     <td>Item in Stock:</td>
-                    <td><input type ="text" name="itemdesc" required></td>
+                    <td><input type ="text" name="itemstock" required></td>
                 </tr>
             </table>
             <table>
