@@ -103,7 +103,7 @@ CREATE TABLE `service` (
   `spID` varchar(50) NOT NULL,
   `servicetype` varchar(50) NOT NULL,
   `itemname` varchar(50) NOT NULL,
-  `itemprice` int(11) NOT NULL,
+  `itemprice` float(11) NOT NULL,
   `itemdesc` varchar(255) NOT NULL,
   `itemstock` int(11) NOT NULL,
   `itemimage` longblob NOT NULL
