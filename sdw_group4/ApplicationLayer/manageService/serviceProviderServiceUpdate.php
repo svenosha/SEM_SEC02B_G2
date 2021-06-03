@@ -81,7 +81,7 @@
                 </tr>
                 <tr>
                     <td>Item in Stock:&emsp;</td>
-                    <td><input type='text' name="itemdesc" value="<?=$row['itemstock']?>" required></td>
+                    <td><input type='text' name="itemstock" value="<?=$row['itemstock']?>" required></td>
                 </tr>
                 <tr>
                     <td>Item Image:&emsp;&emsp;</td>
