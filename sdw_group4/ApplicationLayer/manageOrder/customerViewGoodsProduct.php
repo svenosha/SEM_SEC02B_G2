@@ -71,7 +71,7 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td style="text-align: center;"><h2><input type="text" name="itemname" value="<?=$row['itemname']?>" class="noborder" style="text-align: center;" readonly></h2></td>
+                        <td style="text-align: center; width: 80% "><h2><input type="text" name="itemname" value="<?=$row['itemname']?>" class="noborder" style="text-align: center; width: 100%; font-size: 24px;" readonly></h2></td>
                     </tr>
                     <tr>
                         <td><b>Unit Price(RM):</b></td>
@@ -87,7 +87,7 @@
                     </tr>
                         <tr>
                         <td><b>Description:</b></td>
-                        <td><input type="text" name="itemdesc" value="<?=$row['itemdesc']?>" class="noborder" readonly></td>
+                        <td><textarea rows="4" cols="50" ><?=$row['itemdesc']?></textarea></td>
                         </tr>
                     </form>
                     <?php } ?>
